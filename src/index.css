@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+/* 
+ * UGOPAWAVERIFY - Typography & Cross-Platform Naira (₦) Rendering Rules
+ * Ensures the official Nigerian Naira Unicode symbol (₦ - U+20A6) displays crisply
+ * without square/tofu artifacts across Android, iOS, Windows, macOS, and Linux.
+ */
+
+/* Fallback definition specifically covering the Unicode Currency Symbols block U+20A0-U+20CF */
+@font-face {
+  font-family: 'NairaSystemFallback';
+  src: local('Arial'), local('Segoe UI'), local('Roboto'), local('Noto Sans'), local('Helvetica Neue'), local('sans-serif');
+  unicode-range: U+20A0-U+20CF;
+}
+
+*, *::before, *::after, body, html, input, button, select, textarea {
+  font-family: 'Plus Jakarta Sans', 'NairaSystemFallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+/* Ensure monospace numbers and code blocks gracefully fall back to a font supporting ₦ */
+.font-mono, code, pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", 'NairaSystemFallback', Arial, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* Specific class to guarantee crisp rendering of the Naira currency symbol */
+.currency-naira, .naira-sign {
+  font-family: 'Plus Jakarta Sans', 'NairaSystemFallback', Arial, 'Segoe UI', Roboto, sans-serif;
+  font-style: normal;
+  display: inline;
+}
+
+/* 
+ * Video-Like Dynamic Hero Background Effects
+ * Uses hardware-accelerated transforms to simulate live video camera tracking,
+ * subtle panning, zooming, depth shifts, and dynamic active scanner lighting.
+ */
+@keyframes heroVideoPanZoomA {
+  0% {
+    transform: scale(1.03) translate(0%, 0%);
+    opacity: 1;
+    filter: brightness(0.92) contrast(1.05);
+  }
+  25% {
+    transform: scale(1.10) translate(-1.5%, -1%);
+    opacity: 1;
+    filter: brightness(0.96) contrast(1.08);
+  }
+  48% {
+    transform: scale(1.17) translate(-3%, -2%);
+    opacity: 1;
+  }
+  53% {
+    opacity: 0;
+    transform: scale(1.18) translate(-3.2%, -2.2%);
+  }
+  96% {
+    opacity: 0;
+    transform: scale(1.03) translate(0%, 0%);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.03) translate(0%, 0%);
+    filter: brightness(0.92) contrast(1.05);
+  }
+}
+
+@keyframes heroVideoPanZoomB {
+  0% {
+    opacity: 0;
+    transform: scale(1.18) translate(2.5%, 1.5%);
+  }
+  47% {
+    opacity: 0;
+    transform: scale(1.18) translate(2.5%, 1.5%);
+  }
+  52% {
+    opacity: 1;
+    transform: scale(1.16) translate(2%, 1%);
+    filter: brightness(0.95) contrast(1.06);
+  }
+  75% {
+    transform: scale(1.08) translate(0.5%, -0.5%);
+    opacity: 1;
+    filter: brightness(0.98) contrast(1.08);
+  }
+  97% {
+    transform: scale(1.03) translate(-1%, -1.2%);
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.02) translate(-1.2%, -1.4%);
+  }
+}
+
+@keyframes heroScannerSweep {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.35;
+  }
+  85% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateY(300%);
+    opacity: 0;
+  }
+}
+
+@keyframes heroAmbientPulse {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.04);
+  }
+}
+
+.animate-hero-video-a {
+  animation: heroVideoPanZoomA 24s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
+}
+
+.animate-hero-video-b {
+  animation: heroVideoPanZoomB 24s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
+}
+
+.animate-scanner-sweep {
+  animation: heroScannerSweep 7s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-ambient-pulse {
+  animation: heroAmbientPulse 8s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+/* Truehost-style modern animated skeleton shimmer */
+@keyframes truehostShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer-dark {
+  background: linear-gradient(90deg, #181818 25%, #2a2a2a 50%, #181818 75%);
+  background-size: 200% 100%;
+  animation: truehostShimmer 1.5s infinite ease-in-out;
+}
+
+.skeleton-shimmer-light {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: truehostShimmer 1.5s infinite ease-in-out;
+}
+

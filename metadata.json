@@ -1,0 +1,6 @@
+{
+  "name": "UGOPAWAVERIFY",
+  "description": "Fast, Secure & Reliable Identity Verification and Digital Services Platform for Nigeria",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
