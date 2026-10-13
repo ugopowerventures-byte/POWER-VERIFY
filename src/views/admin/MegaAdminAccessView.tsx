@@ -6,7 +6,7 @@ import { ShieldCheck, Lock, ArrowRight, Eye, EyeOff, AlertCircle } from 'lucide-
 
 export const MegaAdminAccessView: React.FC = () => {
   const { user, login } = useAuth();
-  const [identifier, setIdentifier] = useState('/Mega//admin/ugopawaverify');
+  const [identifier, setIdentifier] = useState('/Mega//admin/bazerightverify');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -134,7 +134,7 @@ export const MegaAdminAccessView: React.FC = () => {
                   type="text"
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder="/Mega//admin/ugopawaverify"
+                  placeholder="/Mega//admin/bazerightverify"
                   className="w-full px-4 py-3 rounded-xl bg-[#1A1A1A] border border-[#2D2D2D] text-white text-xs font-mono focus:outline-none focus:border-amber-500 transition-colors"
                   required
                 />

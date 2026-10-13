@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
           <div className="lg:col-span-2 space-y-4">
             <BrandLogo size="lg" showText={true} textClassName="text-white text-2xl" />
             <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
-              UGOPAWAVERIFY is Nigeria's premier enterprise identity verification and digital services architecture. Providing individuals, fintechs, and organizations with fast, cryptographic verification against national registries.
+              BAZERIGHTVERIFY is Nigeria's premier enterprise identity verification and digital services architecture. Providing individuals, fintechs, and organizations with fast, cryptographic verification against national registries.
             </p>
             <div className="flex items-center gap-2 text-xs text-amber-400/90 bg-amber-950/30 border border-amber-500/20 px-3 py-1.5 rounded-lg w-fit">
               <Lock className="w-3.5 h-3.5" />
@@ -64,7 +64,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2.5 text-sm">
               <li>
                 <button onClick={() => navigate('/about')} className="hover:text-amber-400 transition-colors">
-                  About UGOPAWAVERIFY
+                  About BAZERIGHTVERIFY
                 </button>
               </li>
               <li>
@@ -102,8 +102,8 @@ export const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#FF6B00] shrink-0" />
-                <a href={`mailto:${settings?.businessEmail || settings?.supportEmail || 'contact@ugopawaverify.com.ng'}`} className="hover:text-white">
-                  {settings?.businessEmail || settings?.supportEmail || 'contact@ugopawaverify.com.ng'}
+                <a href={`mailto:${settings?.businessEmail || settings?.supportEmail || 'contact@bazerightverify.com.ng'}`} className="hover:text-white">
+                  {settings?.businessEmail || settings?.supportEmail || 'contact@bazerightverify.com.ng'}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
@@ -119,7 +119,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
-          <p>© {new Date().getFullYear()} UGOPAWAVERIFY. All rights reserved. Commercial Identity Solutions.</p>
+          <p>© {new Date().getFullYear()} BAZERIGHTVERIFY. All rights reserved. Commercial Identity Solutions.</p>
           <div className="flex items-center gap-6">
             <button onClick={() => navigate('/terms')} className="hover:text-gray-300">
               Terms

@@ -28,7 +28,7 @@ export const ForgotPasswordView: React.FC = () => {
             <ShieldCheck className="w-7 h-7 text-black" strokeWidth={2.5} />
           </div>
           <span className="text-2xl font-black text-white">
-            UGOPAWA<span className="text-[#FF6B00]">VERIFY</span>
+            BAZERIGHT<span className="text-[#FF6B00]">VERIFY</span>
           </span>
         </div>
         <h2 className="text-2xl font-extrabold text-white">Reset Account Password</h2>

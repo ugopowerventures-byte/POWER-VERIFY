@@ -39,7 +39,7 @@ export const AdminSettingsView: React.FC = () => {
           whatsappNumber: data.whatsappNumber || data.supportWhatsapp || '07071944789',
           phoneNumber1: data.phoneNumber1 || '07071944789',
           phoneNumber2: data.phoneNumber2 || '07018486189',
-          businessEmail: data.businessEmail || data.supportEmail || 'contact@ugopawaverify.com.ng'
+          businessEmail: data.businessEmail || data.supportEmail || 'contact@bazerightverify.com.ng'
         });
       } catch (err) {
         console.error(err);
@@ -241,7 +241,7 @@ export const AdminSettingsView: React.FC = () => {
                 required
                 value={settings.businessEmail}
                 onChange={(e) => setSettings({ ...settings, businessEmail: e.target.value })}
-                placeholder="e.g. contact@ugopawaverify.com.ng"
+                placeholder="e.g. contact@bazerightverify.com.ng"
                 className="w-full px-3 py-2 bg-[#121212] border border-[#333] rounded-xl text-xs text-white focus:outline-none focus:border-[#FF6B00]"
               />
             </div>

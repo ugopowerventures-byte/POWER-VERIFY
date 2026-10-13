@@ -95,7 +95,7 @@ export function releaseLock(key: string): void {
 
 export function ensureOwnerExists(db: DatabaseSchema): void {
   const ownerEmail = 'ugochukwuoparaocha3@gmail.com';
-  const megaAdminUsername = '/Mega//admin/ugopawaverify';
+  const megaAdminUsername = '/Mega//admin/bazerightverify';
   const megaAdminPassword = (process.env.INITIAL_OWNER_PASSWORD || process.env.MEGA_ADMIN_PASSWORD || 'Ugo@536992').trim();
 
   // 1. Locate existing permanent Mega Admin record or find by email / path / role
@@ -103,8 +103,8 @@ export function ensureOwnerExists(db: DatabaseSchema): void {
     (u) =>
       (u.email && u.email.toLowerCase() === ownerEmail) ||
       u.username === megaAdminUsername ||
-      u.username?.toLowerCase() === '/mega//admin/ugopawaverify' ||
-      u.username?.toLowerCase() === '/mega/admin/ugopawaverify' ||
+      u.username?.toLowerCase() === '/mega//admin/bazerightverify' ||
+      u.username?.toLowerCase() === '/mega/admin/bazerightverify' ||
       u.role === 'MEGA_ADMIN'
   );
 
@@ -125,7 +125,7 @@ export function ensureOwnerExists(db: DatabaseSchema): void {
       id: 'usr_owner_001',
       email: ownerEmail,
       username: megaAdminUsername,
-      fullName: 'UGOPAWAVERIFY Mega Admin',
+      fullName: 'BAZERIGHTVERIFY Mega Admin',
       phone: '+2348030009988',
       passwordHash: hash,
       salt,
@@ -148,7 +148,7 @@ export function ensureOwnerExists(db: DatabaseSchema): void {
     owner.id = owner.id || 'usr_owner_001';
     owner.email = ownerEmail;
     owner.username = megaAdminUsername;
-    owner.fullName = owner.fullName || 'UGOPAWAVERIFY Mega Admin';
+    owner.fullName = 'BAZERIGHTVERIFY Mega Admin';
     owner.role = 'MEGA_ADMIN';
     owner.status = 'ACTIVE';
     owner.onboardingStatus = 'approved';
@@ -1381,9 +1381,9 @@ function getInitialData(): DatabaseSchema {
         id: 'prov_ninja_01',
         name: 'Ninja API (NIN & BVN Gateway)',
         slug: 'ninja',
-        baseUrl: 'https://api.ninja.boucloud.io',
-        apiKey: '',
-        secretKey: '',
+        baseUrl: process.env.NINJA_BASE_URL || 'https://api.ninja.boucloud.io',
+        apiKey: process.env.NINJA_PUBLIC_KEY || 'pk_a1a5a3ac-ef25-4a98-882f-e036d0925d28',
+        secretKey: process.env.NINJA_SECRET_KEY || 'sk_780c5ae3-0e58-4c06-9358-8295c2609fff',
         status: 'CONNECTED',
         isDevelopmentMode: false,
         balance: 0,
@@ -1393,19 +1393,30 @@ function getInitialData(): DatabaseSchema {
         id: 'prov_veripine_01',
         name: 'Veripine API Gateway',
         slug: 'veripine',
-        baseUrl: 'https://veripine.com/api',
-        apiKey: '',
-        secretKey: '',
+        baseUrl: process.env.VERIPINE_BASE_URL || 'https://veripine.com',
+        apiKey: process.env.VERIPINE_API_KEY || 'ninbvn_4056ea400a8975e0916a',
+        secretKey: process.env.VERIPINE_SECRET_KEY || '',
         status: 'CONNECTED',
         isDevelopmentMode: false,
         balance: 65.4,
         notes: 'Dedicated provider for Identity Cross Lookup, NIN Phone Search, BVN Retrieval with Phone, Personalization Tracking, Demographic Verification, and NIN Modifications.'
+      },
+      {
+        id: 'prov_paystack_01',
+        name: 'Paystack Live Gateway',
+        slug: 'paystack',
+        baseUrl: 'https://api.paystack.co',
+        apiKey: process.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_live_82ac2f13c2ad3ac6a9a4da61e76b2b5008e85a57',
+        secretKey: process.env.PAYSTACK_SECRET_KEY || 'sk_live_5c1a88b4e85201d2300faaa89b4fabd9a749a92e',
+        status: 'CONNECTED',
+        isDevelopmentMode: false,
+        notes: 'Official live payment gateway for customer wallet card & bank account funding.'
       }
     ],
     announcements: [
       {
         id: 'ann_01',
-        title: 'Welcome to UGOPAWAVERIFY Enterprise Portal',
+        title: 'Welcome to BAZERIGHTVERIFY Enterprise Portal',
         message: 'All verification queries are cryptographically encrypted. Always ensure your wallet is pre-funded before submitting bulk or individual requests.',
         type: 'INFORMATION',
         isActive: true,
@@ -1419,15 +1430,15 @@ function getInitialData(): DatabaseSchema {
     auditLogs: [],
     settings: {
       id: 'settings_main',
-      platformName: 'UGOPAWAVERIFY',
-      logoText: 'UGOPAWAVERIFY',
+      platformName: 'BAZERIGHTVERIFY',
+      logoText: 'BAZERIGHTVERIFY',
       tagline: 'Fast, Secure & Reliable Identity Verification Platform',
-      supportWhatsapp: process.env.SUPPORT_WHATSAPP || '07071944789',
-      supportEmail: process.env.SUPPORT_EMAIL || 'contact@ugopawaverify.com.ng',
+      supportWhatsapp: process.env.SUPPORT_WHATSAPP || '+2347071944789',
+      supportEmail: process.env.SUPPORT_EMAIL || 'contact@bazerightverify.com.ng',
       whatsappNumber: '07071944789',
       phoneNumber1: '07071944789',
       phoneNumber2: '07018486189',
-      businessEmail: 'contact@ugopawaverify.com.ng',
+      businessEmail: 'contact@bazerightverify.com.ng',
       unitValueNgn: 200,
       currency: 'Credits',
       currencySymbol: 'Credits',
@@ -1440,7 +1451,7 @@ function getInitialData(): DatabaseSchema {
       bankDetails: {
         bankName: 'Moniepoint Microfinance Bank',
         accountNumber: '8249103821',
-        accountName: 'UGOPAWA VERIFY SERVICES LTD'
+        accountName: 'BAZERIGHT VERIFY SERVICES LTD'
       },
       updatedAt: new Date().toISOString()
     }

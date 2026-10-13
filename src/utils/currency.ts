@@ -1,5 +1,5 @@
 /**
- * UGOPAWAVERIFY Official Currency & Units Utility
+ * BAZERIGHTVERIFY Official Currency & Units Utility
  * 
  * Transition all customer-facing displays to "UNITS":
  * Default conversion rule: 1 UNIT = ₦200

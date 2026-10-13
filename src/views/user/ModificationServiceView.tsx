@@ -1547,7 +1547,7 @@ export const ModificationServiceView: React.FC = () => {
                 required
               />
               <span>
-                I hereby declare that all supplied personal data, changes, and uploaded passport photographs belong to the individual named, and I authorize Ugopawa Verify to submit this legal modification request on my behalf.
+                I hereby declare that all supplied personal data, changes, and uploaded passport photographs belong to the individual named, and I authorize Bazeright Verify to submit this legal modification request on my behalf.
               </span>
             </label>
           </div>

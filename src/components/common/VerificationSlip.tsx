@@ -95,7 +95,7 @@ export const VerificationSlip: React.FC<VerificationSlipProps> = ({
   // Generate QR code and preload slip templates in background for instant downloading
   useEffect(() => {
     if (!isFailed && citizen) {
-      const qrText = `UGOPAWAVERIFY|REF:${request.reference}|ID:${citizen.nin || citizen.bvn || citizen.idNumber}|NAME:${citizen.fullName}|STATUS:VERIFIED`;
+      const qrText = `BAZERIGHTVERIFY|REF:${request.reference}|ID:${citizen.nin || citizen.bvn || citizen.idNumber}|NAME:${citizen.fullName}|STATUS:VERIFIED`;
       QRCode.toDataURL(qrText, { width: 180, margin: 1 })
         .then(setQrCodeDataUrl)
         .catch((e) => console.warn('QR code gen error:', e));
@@ -158,7 +158,7 @@ export const VerificationSlip: React.FC<VerificationSlipProps> = ({
   // Download JPG Handler (Captures the rendered official verified result card)
   const handleDownloadJpg = async () => {
     if (isFailed) return;
-    const node = document.getElementById('ugopawa-verified-dashboard-card');
+    const node = document.getElementById('bazeright-verified-dashboard-card');
     if (!node) return;
     try {
       setDownloading(true);
@@ -171,7 +171,7 @@ export const VerificationSlip: React.FC<VerificationSlipProps> = ({
         cacheBust: false
       });
       const link = document.createElement('a');
-      link.download = `UGOPAWAVERIFY-${request.reference}.jpg`;
+      link.download = `BAZERIGHTVERIFY-${request.reference}.jpg`;
       link.href = dataUrl;
       link.click();
     } catch (err) {
@@ -185,7 +185,7 @@ export const VerificationSlip: React.FC<VerificationSlipProps> = ({
   // Download PNG Handler (Captures the rendered official verified result card)
   const handleDownloadPng = async () => {
     if (isFailed) return;
-    const node = document.getElementById('ugopawa-verified-dashboard-card');
+    const node = document.getElementById('bazeright-verified-dashboard-card');
     if (!node) return;
     try {
       setDownloading(true);
@@ -197,7 +197,7 @@ export const VerificationSlip: React.FC<VerificationSlipProps> = ({
         cacheBust: false
       });
       const link = document.createElement('a');
-      link.download = `UGOPAWAVERIFY-${request.reference}.png`;
+      link.download = `BAZERIGHTVERIFY-${request.reference}.png`;
       link.href = dataUrl;
       link.click();
     } catch (err) {
@@ -272,7 +272,7 @@ export const VerificationSlip: React.FC<VerificationSlipProps> = ({
       {/* EXACT VISUAL TEMPLATE CANVAS MATCHING THE NEW REFERENCE DESIGN */}
       {/* ========================================================================= */}
       <div
-        id="ugopawa-verified-dashboard-card"
+        id="bazeright-verified-dashboard-card"
         ref={printableRef}
         className="relative bg-[#0B0B0B] text-white rounded-3xl p-4 sm:p-7 space-y-6 shadow-2xl overflow-hidden border border-[#222222]"
       >
@@ -322,7 +322,7 @@ export const VerificationSlip: React.FC<VerificationSlipProps> = ({
 
         {/* 1. TOP HEADER */}
         <header className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
-          {/* LEFT SIDE: Shield/fingerprint logo + UGOPAWA VERIFY */}
+          {/* LEFT SIDE: Shield/fingerprint logo + BAZERIGHT VERIFY */}
           <div className="flex items-center gap-3.5">
             {/* Security Shield / Fingerprint Symbol */}
             <div className="w-13 h-13 sm:w-15 sm:h-15 rounded-2xl bg-gradient-to-br from-[#1A1A1A] to-[#0A0A0A] border-2 border-[#FFA600] flex items-center justify-center p-2.5 shadow-lg shadow-orange-500/20 shrink-0 relative">
@@ -354,7 +354,7 @@ export const VerificationSlip: React.FC<VerificationSlipProps> = ({
 
             <div>
               <div className="flex items-baseline tracking-tight">
-                <span className="text-2xl sm:text-3xl font-black text-white">UGOPAWA</span>
+                <span className="text-2xl sm:text-3xl font-black text-white">BAZERIGHT</span>
                 <span className="text-2xl sm:text-3xl font-black ml-1.5 text-[#FFA600]">
                   VERIFY
                 </span>
@@ -998,14 +998,14 @@ export const VerificationSlip: React.FC<VerificationSlipProps> = ({
 
         {/* 4. FOOTER */}
         <footer className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 pt-3 border-t border-white/10 text-white">
-          {/* LEFT: Logo + UGOPAWAVERIFY + Slogan */}
+          {/* LEFT: Logo + BAZERIGHTVERIFY + Slogan */}
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-[#1A1A1A] border border-[#FFA600] flex items-center justify-center p-1 shrink-0">
               <ShieldCheck className="w-4 h-4 text-[#FFA600]" />
             </div>
             <div>
               <div className="flex items-baseline">
-                <span className="text-sm font-black text-white">UGOPAWA</span>
+                <span className="text-sm font-black text-white">BAZERIGHT</span>
                 <span className="text-sm font-black ml-1 text-[#FFA600]">VERIFY</span>
               </div>
               <p className="text-[10px] text-gray-400">Fast &nbsp;•&nbsp; Secure &nbsp;•&nbsp; Reliable</p>

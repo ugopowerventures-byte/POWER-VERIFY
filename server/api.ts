@@ -112,7 +112,7 @@ export interface AuthenticatedRequest extends Request {
 function generateToken(userId: string): string {
   const payload = { userId, exp: Date.now() + 7 * 24 * 60 * 60 * 1000 };
   const str = Buffer.from(JSON.stringify(payload)).toString('base64url');
-  const secret = process.env.JWT_SECRET || 'ugopawa_secure_identity_key_2026';
+  const secret = process.env.JWT_SECRET || 'bazeright_secure_identity_key_2026';
   const sig = crypto.createHmac('sha256', secret).update(str).digest('base64url');
   return `${str}.${sig}`;
 }
@@ -122,7 +122,7 @@ function verifyToken(tokenString: string): string | null {
     const parts = tokenString.split('.');
     if (parts.length !== 2) return null;
     const [str, sig] = parts;
-    const secret = process.env.JWT_SECRET || 'ugopawa_secure_identity_key_2026';
+    const secret = process.env.JWT_SECRET || 'bazeright_secure_identity_key_2026';
     const expectedSig = crypto.createHmac('sha256', secret).update(str).digest('base64url');
     if (sig !== expectedSig) return null;
     const payload = JSON.parse(Buffer.from(str, 'base64url').toString('utf-8'));
@@ -219,7 +219,7 @@ export function getPriceForRole(basePrice: number, role?: string): number {
 // Public Endpoints: Health & Settings & Public Stats
 // ----------------------------------------------------
 apiRouter.get('/health', (req, res) => {
-  res.json({ status: 'healthy', platform: 'UGOPAWAVERIFY', timestamp: new Date().toISOString() });
+  res.json({ status: 'healthy', platform: 'BAZERIGHTVERIFY', timestamp: new Date().toISOString() });
 });
 
 apiRouter.get('/supabase/status', async (req, res) => {
@@ -239,7 +239,7 @@ apiRouter.get('/settings/public', (req, res) => {
     whatsappNumber: s.whatsappNumber || s.supportWhatsapp || '07071944789',
     phoneNumber1: s.phoneNumber1 || '07071944789',
     phoneNumber2: s.phoneNumber2 || '07018486189',
-    businessEmail: s.businessEmail || s.supportEmail || 'contact@ugopawaverify.com.ng',
+    businessEmail: s.businessEmail || s.supportEmail || 'contact@bazerightverify.com.ng',
     unitValueNgn: s.unitValueNgn || 200,
     currency: s.currency === 'UNITS' ? 'Credits' : (s.currency || 'Credits'),
     currencySymbol: s.currencySymbol === 'UNITS' ? 'Credits' : (s.currencySymbol || 'Credits'),
@@ -359,7 +359,7 @@ apiRouter.post('/auth/register', async (req, res) => {
   db.notifications.push({
     id: `notif_${Date.now()}`,
     userId,
-    title: 'Welcome to UGOPAWAVERIFY',
+    title: 'Welcome to BAZERIGHTVERIFY',
     message: 'Your identity portal has been set up successfully. Fund your wallet to begin authenticating records.',
     type: 'SECURITY',
     isRead: false,
@@ -401,12 +401,12 @@ apiRouter.post('/auth/login', async (req, res) => {
 
   // Check if identifier matches the permanent Mega Admin account
   const isMegaAdminIdentifier =
-    clean === '/mega//admin/ugopawaverify' ||
-    clean === '/mega/admin/ugopawaverify' ||
-    clean === 'mega/admin/ugopawaverify' ||
-    clean === 'ugopawaverify' ||
+    clean === '/mega//admin/bazerightverify' ||
+    clean === '/mega/admin/bazerightverify' ||
+    clean === 'mega/admin/bazerightverify' ||
+    clean === 'bazerightverify' ||
     clean === 'ugochukwuoparaocha3@gmail.com' ||
-    rawId === '/Mega//admin/ugopawaverify';
+    rawId === '/Mega//admin/bazerightverify';
 
   let user = db.users.find((u) => {
     if (isMegaAdminIdentifier && u.role === 'MEGA_ADMIN') return true;
@@ -490,10 +490,10 @@ apiRouter.post('/auth/login', async (req, res) => {
 
 /**
  * Dedicated secure login endpoint for the permanent Mega Administrator
- * Username/Path: "/Mega//admin/ugopawaverify"
+ * Username/Path: "/Mega//admin/bazerightverify"
  */
 apiRouter.post('/auth/mega-admin-login', async (req, res) => {
-  const { identifier = '/Mega//admin/ugopawaverify', password } = req.body;
+  const { identifier = '/Mega//admin/bazerightverify', password } = req.body;
   if (!password) {
     return res.status(400).json({ error: 'Mega Administrator password is required.' });
   }
@@ -506,7 +506,7 @@ apiRouter.post('/auth/mega-admin-login', async (req, res) => {
     (u) =>
       u.role === 'MEGA_ADMIN' ||
       u.email.toLowerCase() === 'ugochukwuoparaocha3@gmail.com' ||
-      u.username === '/Mega//admin/ugopawaverify'
+      u.username === '/Mega//admin/bazerightverify'
   );
 
   if (!megaAdmin) {
@@ -1186,7 +1186,7 @@ export async function fulfillPaystackPayment({
       }
     }
 
-    // 4. Verify that this reference belongs to an existing UGOPAWAVERIFY funding request
+    // 4. Verify that this reference belongs to an existing BAZERIGHTVERIFY funding request
     let fundingReq = db.fundingRequests.find((r) => r.reference === cleanRef);
     if (!fundingReq && supabaseServer) {
       try {
@@ -1219,7 +1219,7 @@ export async function fulfillPaystackPayment({
       return {
         success: false,
         alreadyProcessed: false,
-        message: `No UGOPAWAVERIFY funding request found for reference '${cleanRef}'.`
+        message: `No BAZERIGHTVERIFY funding request found for reference '${cleanRef}'.`
       };
     }
 
@@ -3090,7 +3090,11 @@ apiRouter.patch('/admin/users/:id/role', requireSuperAdmin, async (req: Authenti
   }
 
   // 2. Strict Security Rule: The permanent Mega Administrator account cannot be modified, demoted or altered
-  if (targetUser.role === 'MEGA_ADMIN' || targetUser.email.toLowerCase() === 'ugochukwuoparaocha3@gmail.com' || targetUser.username === '/Mega//admin/ugopawaverify') {
+  if (
+    targetUser.role === 'MEGA_ADMIN' ||
+    targetUser.email.toLowerCase() === 'ugochukwuoparaocha3@gmail.com' ||
+    targetUser.username === '/Mega//admin/bazerightverify'
+  ) {
     return res.status(403).json({ error: 'Security Violation: The permanent Mega Administrator account cannot be modified or demoted.' });
   }
 
@@ -3227,8 +3231,8 @@ apiRouter.patch('/admin/users/:id/status', requireAdmin, async (req: Authenticat
   if (
     targetUser.role === 'MEGA_ADMIN' ||
     targetUser.email.toLowerCase() === 'ugochukwuoparaocha3@gmail.com' ||
-    targetUser.username === '/Mega//admin/ugopawaverify' ||
-    targetUser.username?.toLowerCase() === '/mega//admin/ugopawaverify'
+    targetUser.username === '/Mega//admin/bazerightverify' ||
+    targetUser.username?.toLowerCase() === '/mega//admin/bazerightverify'
   ) {
     return res.status(403).json({ error: 'Security Violation: Cannot pause, play, or suspend the permanent Mega Administrator account.' });
   }
@@ -3300,8 +3304,8 @@ apiRouter.delete('/admin/users/:id', requireAdmin, async (req: AuthenticatedRequ
   if (
     targetUser.role === 'MEGA_ADMIN' ||
     targetUser.email.toLowerCase() === 'ugochukwuoparaocha3@gmail.com' ||
-    targetUser.username === '/Mega//admin/ugopawaverify' ||
-    targetUser.username?.toLowerCase() === '/mega//admin/ugopawaverify'
+    targetUser.username === '/Mega//admin/bazerightverify' ||
+    targetUser.username?.toLowerCase() === '/mega//admin/bazerightverify'
   ) {
     return res.status(403).json({ error: 'Security Violation: The permanent Mega Administrator account cannot be deleted.' });
   }

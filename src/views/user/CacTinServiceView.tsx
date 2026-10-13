@@ -1005,7 +1005,7 @@ export const CacTinServiceView: React.FC = () => {
                 required
               />
               <span>
-                I hereby declare that all supplied business particulars, director records, and identification information are authentic, and I authorize Ugopawa Verify to file this official application under CAC & TIN on my behalf.
+                I hereby declare that all supplied business particulars, director records, and identification information are authentic, and I authorize Bazeright Verify to file this official application under CAC & TIN on my behalf.
               </span>
             </label>
           </div>

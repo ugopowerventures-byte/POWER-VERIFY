@@ -73,7 +73,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children, activeKey }) => 
       {settings?.maintenanceMode && (
         <div className="bg-amber-500 text-black px-4 py-2 text-center text-xs font-bold flex items-center justify-center gap-2">
           <AlertTriangle className="w-4 h-4 shrink-0" />
-          <span>UGOPAWAVERIFY is currently undergoing scheduled platform maintenance. Services may experience brief delays.</span>
+          <span>BAZERIGHTVERIFY is currently undergoing scheduled platform maintenance. Services may experience brief delays.</span>
         </div>
       )}
 

@@ -77,7 +77,7 @@ async function startServer() {
   }
 
   const server = app.listen(PORT, "0.0.0.0", () => {
-    console.log(`UGOPAWAVERIFY server listening on http://0.0.0.0:${PORT}`);
+    console.log(`BAZERIGHTVERIFY server listening on http://0.0.0.0:${PORT}`);
   });
 
   // Ensure Node HTTP server doesn't prematurely drop socket connections before 2-minute API timeout

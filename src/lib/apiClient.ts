@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'ugopawa_auth_token';
+const TOKEN_KEY = 'bazeright_auth_token';
 
 class ApiClient {
   private token: string | null = null;

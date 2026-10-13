@@ -5,7 +5,12 @@ const defaultAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmF
 
 function resolveSupabaseUrl(): string {
   const envUrl = (import.meta.env.VITE_SUPABASE_URL || '').trim();
-  if (envUrl.startsWith('http://') || envUrl.startsWith('https://')) {
+  if (
+    (envUrl.startsWith('http://') || envUrl.startsWith('https://')) &&
+    !envUrl.includes('your-project-id') &&
+    !envUrl.includes('your-project') &&
+    !envUrl.includes('placeholder')
+  ) {
     return envUrl.replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
   }
   if (envUrl.startsWith('eyJ') && envUrl.includes('.')) {
@@ -13,7 +18,7 @@ function resolveSupabaseUrl(): string {
       const parts = envUrl.split('.');
       if (parts.length >= 2) {
         const payload = JSON.parse(atob(parts[1]));
-        if (payload.ref) {
+        if (payload.ref && !payload.ref.includes('your-project') && !payload.ref.includes('placeholder')) {
           return `https://${payload.ref}.supabase.co`;
         }
       }
@@ -23,7 +28,14 @@ function resolveSupabaseUrl(): string {
 }
 
 export const supabaseUrl = resolveSupabaseUrl();
-export const supabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || defaultAnonKey).trim();
+const rawAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || '').trim();
+export const supabaseAnonKey =
+  rawAnonKey &&
+  !rawAnonKey.includes('your-anon-public-key') &&
+  !rawAnonKey.includes('placeholder') &&
+  rawAnonKey.length > 20
+    ? rawAnonKey
+    : defaultAnonKey;
 
 export const isSupabaseConfigured = Boolean(
   supabaseUrl && 

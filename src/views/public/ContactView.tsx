@@ -32,7 +32,7 @@ export const ContactView: React.FC = () => {
           Support Desk
         </span>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-950 tracking-tight">
-          Contact UGOPAWAVERIFY
+          Contact BAZERIGHTVERIFY
         </h1>
         <p className="text-sm text-gray-600">
           Our specialized verification and compliance desk is available 24/7 to resolve technical and wallet inquiries.
@@ -74,7 +74,7 @@ export const ContactView: React.FC = () => {
               <Mail className="w-5 h-5" />
             </div>
             <h4 className="font-bold text-gray-900 text-sm">Official Business Email</h4>
-            <p className="text-xs text-gray-700 font-mono font-bold">{settings?.businessEmail || settings?.supportEmail || 'contact@ugopawaverify.com.ng'}</p>
+            <p className="text-xs text-gray-700 font-mono font-bold">{settings?.businessEmail || settings?.supportEmail || 'contact@bazerightverify.com.ng'}</p>
             <p className="text-[11px] text-gray-400">Target response time: under 30 minutes</p>
           </div>
 
@@ -98,7 +98,7 @@ export const ContactView: React.FC = () => {
               </div>
               <h3 className="text-xl font-bold text-gray-900">Message Received</h3>
               <p className="text-xs text-gray-500 max-w-sm mx-auto">
-                Thank you for contacting UGOPAWAVERIFY support. An agent has received your dispatch and will respond promptly via email.
+                Thank you for contacting BAZERIGHTVERIFY support. An agent has received your dispatch and will respond promptly via email.
               </p>
               <button
                 onClick={() => setSubmitted(false)}

@@ -108,7 +108,7 @@ serve(async (req: Request) => {
       .maybeSingle();
 
     const userEmail = profile?.email || user.email || '';
-    const userName = profile?.full_name || 'UGOPAWAVERIFY User';
+    const userName = profile?.full_name || 'BAZERIGHTVERIFY User';
 
     // 6. Record pending funding request in Supabase
     const { error: insertError } = await supabase
@@ -136,7 +136,7 @@ serve(async (req: Request) => {
       amount: amountInKobo,
       reference,
       metadata: {
-        platform: 'UGOPAWAVERIFY',
+        platform: 'BAZERIGHTVERIFY',
         user_id: user.id,
         user_name: userName,
         user_email: userEmail,

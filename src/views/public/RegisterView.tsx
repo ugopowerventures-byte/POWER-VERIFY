@@ -159,7 +159,7 @@ export const RegisterView: React.FC = () => {
                   required
                   value={formData.username}
                   onChange={handleChange}
-                  placeholder="e.g. ugopawa_agent01"
+                  placeholder="e.g. bazeright_agent01"
                   className="w-full pl-10 pr-4 py-2.5 bg-[#121212] border border-[#2F2F2F] rounded-xl text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#FF6B00]"
                 />
                 <User className="w-4 h-4 text-gray-500 absolute left-3.5 top-3" />

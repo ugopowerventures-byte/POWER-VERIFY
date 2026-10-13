@@ -1,7 +1,7 @@
 -- ============================================================================
--- UGOPAWAVERIFY - COMPREHENSIVE SUPABASE POSTGRESQL DATABASE SCHEMA
+-- BAZERIGHTVERIFY - COMPREHENSIVE SUPABASE POSTGRESQL DATABASE SCHEMA
 -- ============================================================================
--- Platform: UGOPAWAVERIFY Identity & Verification System
+-- Platform: BAZERIGHTVERIFY Identity & Verification System
 -- Target: Supabase (PostgreSQL 15+)
 -- Instructions: Run this script directly inside the Supabase SQL Editor.
 -- ============================================================================
@@ -350,15 +350,15 @@ CREATE TABLE IF NOT EXISTS public.api_providers (
 -- O. PLATFORM SETTINGS
 CREATE TABLE IF NOT EXISTS public.platform_settings (
     id TEXT PRIMARY KEY DEFAULT 'settings_main',
-    platform_name TEXT NOT NULL DEFAULT 'UGOPAWAVERIFY',
-    logo_text TEXT NOT NULL DEFAULT 'UGOPAWAVERIFY',
+    platform_name TEXT NOT NULL DEFAULT 'BAZERIGHTVERIFY',
+    logo_text TEXT NOT NULL DEFAULT 'BAZERIGHTVERIFY',
     tagline TEXT NOT NULL DEFAULT 'Fast, Secure & Reliable Identity Verification Platform',
     support_whatsapp TEXT NOT NULL DEFAULT '+2348030000000',
-    support_email TEXT NOT NULL DEFAULT 'support@ugopawaverify.ng',
+    support_email TEXT NOT NULL DEFAULT 'support@bazerightverify.ng',
     whatsapp_number TEXT DEFAULT '07071944789',
     phone_number1 TEXT DEFAULT '07071944789',
     phone_number2 TEXT DEFAULT '07018486189',
-    business_email TEXT DEFAULT 'contact@ugopawaverify.com.ng',
+    business_email TEXT DEFAULT 'contact@bazerightverify.com.ng',
     unit_value_ngn NUMERIC(10, 2) NOT NULL DEFAULT 200.00,
     currency TEXT NOT NULL DEFAULT 'Credits',
     currency_symbol TEXT NOT NULL DEFAULT 'Credits',
@@ -368,7 +368,7 @@ CREATE TABLE IF NOT EXISTS public.platform_settings (
     maintenance_mode BOOLEAN NOT NULL DEFAULT FALSE,
     allow_manual_funding BOOLEAN NOT NULL DEFAULT TRUE,
     allow_card_funding BOOLEAN NOT NULL DEFAULT TRUE,
-    bank_details JSONB NOT NULL DEFAULT '{"bankName": "Moniepoint Microfinance Bank", "accountNumber": "8249103821", "accountName": "UGOPAWA VERIFY SERVICES LTD"}'::jsonb,
+    bank_details JSONB NOT NULL DEFAULT '{"bankName": "Moniepoint Microfinance Bank", "accountNumber": "8249103821", "accountName": "BAZERIGHT VERIFY SERVICES LTD"}'::jsonb,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now())
 );
 
@@ -572,15 +572,15 @@ INSERT INTO public.platform_settings (
     allow_card_funding, bank_details
 ) VALUES (
     'settings_main',
-    'UGOPAWAVERIFY',
-    'UGOPAWAVERIFY',
+    'BAZERIGHTVERIFY',
+    'BAZERIGHTVERIFY',
     'Fast, Secure & Reliable Identity Verification Platform',
     '+2348030000000',
-    'support@ugopawaverify.ng',
+    'support@bazerightverify.ng',
     '07071944789',
     '07071944789',
     '07018486189',
-    'contact@ugopawaverify.com.ng',
+    'contact@bazerightverify.com.ng',
     200.00,
     'Credits',
     'Credits',
@@ -590,7 +590,7 @@ INSERT INTO public.platform_settings (
     false,
     true,
     true,
-    '{"bankName": "Moniepoint Microfinance Bank", "accountNumber": "8249103821", "accountName": "UGOPAWA VERIFY SERVICES LTD"}'::jsonb
+    '{"bankName": "Moniepoint Microfinance Bank", "accountNumber": "8249103821", "accountName": "BAZERIGHT VERIFY SERVICES LTD"}'::jsonb
 ) ON CONFLICT (id) DO UPDATE SET
     platform_name = EXCLUDED.platform_name,
     unit_value_ngn = EXCLUDED.unit_value_ngn,

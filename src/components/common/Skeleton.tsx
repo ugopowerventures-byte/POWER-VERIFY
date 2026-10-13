@@ -36,7 +36,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
 };
 
 /**
- * Skeleton placeholder for user dashboard (light theme matching UGOPAWAVERIFY user portal)
+ * Skeleton placeholder for user dashboard (light theme matching BAZERIGHTVERIFY user portal)
  */
 export const UserDashboardSkeleton: React.FC = () => {
   return (

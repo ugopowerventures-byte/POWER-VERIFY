@@ -1,5 +1,5 @@
 /**
- * Central Provider Accounts Configuration for UGOPAWAVERIFY
+ * Central Provider Accounts Configuration for BAZERIGHTVERIFY
  * 
  * Official external provider accounts configuration used across the application.
  * All dashboard and documentation URLs are strictly verified official provider links.

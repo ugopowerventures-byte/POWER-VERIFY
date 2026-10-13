@@ -81,7 +81,7 @@ export const LoginView: React.FC = () => {
                   required
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder="e.g. agent@ugopawaverify.ng"
+                  placeholder="e.g. agent@bazerightverify.ng"
                   className="w-full pl-10 pr-4 py-3 bg-[#121212] border border-[#2F2F2F] rounded-xl text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#FF6B00] transition-colors"
                 />
                 <User className="w-4 h-4 text-gray-500 absolute left-3.5 top-3.5" />

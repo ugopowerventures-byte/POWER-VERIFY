@@ -508,7 +508,7 @@ export async function generateSlipPdfWithMapping(
     (async () => {
       if (!mapping.qrCode) return '';
       const cleanNin = (citizen.nin || citizen.idNumber || '').replace(/\D/g, '');
-      const qrData = `UGOPAWAVERIFY|ID:${cleanNin}|SURNAME:${citizen.surname}|FIRSTNAME:${citizen.firstName}|DOB:${citizen.dateOfBirth}|REF:${citizen.reference}`;
+      const qrData = `BAZERIGHTVERIFY|ID:${cleanNin}|SURNAME:${citizen.surname}|FIRSTNAME:${citizen.firstName}|DOB:${citizen.dateOfBirth}|REF:${citizen.reference}`;
       return QRCode.toDataURL(qrData, { margin: 1, width: 256 });
     })().catch(() => ''),
     (async () => {
@@ -651,7 +651,7 @@ export async function generateSlipPdfWithMapping(
   }
 
   // 7. SAVE THE UNFLATTENED VECTOR PDF FILE WITH OFFICIAL NAMING RULE
-  // Format: "UGOPAWAVERIFY [SLIP TYPE] [NIN or BVN] SLIP [ACTUAL NUMBER].pdf"
+  // Format: "BAZERIGHTVERIFY [SLIP TYPE] [NIN or BVN] SLIP [ACTUAL NUMBER].pdf"
   let slipFormat: 'PREMIUM' | 'STANDARD' | 'REGULAR' = 'PREMIUM';
   if (mapping.slipType === 'NIN_STANDARD' || filenamePrefix.toLowerCase().includes('standard')) {
     slipFormat = 'STANDARD';
@@ -688,7 +688,7 @@ export async function generateSlipPdfWithMapping(
 
 /**
  * Generates official PDF filename following the exact structure:
- * "UGOPAWAVERIFY [SLIP TYPE] [NIN or BVN] SLIP [ACTUAL NUMBER].pdf"
+ * "BAZERIGHTVERIFY [SLIP TYPE] [NIN or BVN] SLIP [ACTUAL NUMBER].pdf"
  */
 export function generateSlipFilename(
   slipType: 'PREMIUM' | 'STANDARD' | 'REGULAR',
@@ -696,7 +696,7 @@ export function generateSlipFilename(
   actualNumber: string
 ): string {
   const cleanNumber = (actualNumber || '').toString().trim().replace(/[\\/:*?"<>|]/g, '') || '00000000000';
-  return `UGOPAWAVERIFY ${slipType} ${docType} SLIP ${cleanNumber}.pdf`;
+  return `BAZERIGHTVERIFY ${slipType} ${docType} SLIP ${cleanNumber}.pdf`;
 }
 
 /**
@@ -705,7 +705,7 @@ export function generateSlipFilename(
 export async function generateNinPremiumSlipPdf(
   req: VerificationRequest,
   res?: VerificationResult | null,
-  _platformName: string = 'UGOPAWAVERIFY'
+  _platformName: string = 'BAZERIGHTVERIFY'
 ): Promise<void> {
   await generateSlipPdfWithMapping(PREMIUM_SLIP_MAPPING, req, res, 'NIN_Premium_Slip');
 }
@@ -716,7 +716,7 @@ export async function generateNinPremiumSlipPdf(
 export async function generateBvnPremiumSlipPdf(
   req: VerificationRequest,
   res?: VerificationResult | null,
-  _platformName: string = 'UGOPAWAVERIFY'
+  _platformName: string = 'BAZERIGHTVERIFY'
 ): Promise<void> {
   await generateSlipPdfWithMapping(BVN_PREMIUM_SLIP_MAPPING, req, res, 'BVN_Premium_Slip');
 }
@@ -727,7 +727,7 @@ export async function generateBvnPremiumSlipPdf(
 export async function generateStandardSlipPdf(
   req: VerificationRequest,
   res?: VerificationResult | null,
-  _platformName: string = 'UGOPAWAVERIFY'
+  _platformName: string = 'BAZERIGHTVERIFY'
 ): Promise<void> {
   await generateSlipPdfWithMapping(STANDARD_SLIP_MAPPING, req, res, 'NIN_Standard_Slip');
 }
@@ -738,7 +738,7 @@ export async function generateStandardSlipPdf(
 export async function generateRegularSlipPdf(
   req: VerificationRequest,
   res?: VerificationResult | null,
-  _platformName: string = 'UGOPAWAVERIFY'
+  _platformName: string = 'BAZERIGHTVERIFY'
 ): Promise<void> {
   await generateSlipPdfWithMapping(REGULAR_SLIP_MAPPING, req, res, 'NIN_Regular_Slip');
 }
@@ -749,7 +749,7 @@ export async function generateRegularSlipPdf(
 export async function generatePremiumSlipPdf(
   req: VerificationRequest,
   res?: VerificationResult | null,
-  platformName: string = 'UGOPAWAVERIFY'
+  platformName: string = 'BAZERIGHTVERIFY'
 ): Promise<void> {
   const code = (req.serviceCode || '').toUpperCase().trim();
   const name = (req.serviceName || '').toLowerCase().trim();
@@ -777,7 +777,7 @@ export async function generatePremiumSlipPdf(
 export async function generateVerificationSlipPdf(
   req: VerificationRequest,
   res?: VerificationResult | null,
-  platformName: string = 'UGOPAWAVERIFY'
+  platformName: string = 'BAZERIGHTVERIFY'
 ): Promise<void> {
   const code = (req.serviceCode || '').toUpperCase().trim();
   const isBvn = code.startsWith('BVN');
@@ -842,7 +842,7 @@ export async function renderCompletedSlipCanvas(
   if (mapping.qrCode) {
     try {
       const cleanNin = (citizen.nin || citizen.idNumber || '').replace(/\D/g, '');
-      const qrData = `UGOPAWAVERIFY|ID:${cleanNin}|SURNAME:${citizen.surname}|REF:${citizen.reference}`;
+      const qrData = `BAZERIGHTVERIFY|ID:${cleanNin}|SURNAME:${citizen.surname}|REF:${citizen.reference}`;
       const qrDataUrl = await QRCode.toDataURL(qrData, { margin: 1, width: 256 });
       const qrImg = await loadImage(qrDataUrl);
       const qx = (mapping.qrCode.xPercent / 100) * canvas.width;

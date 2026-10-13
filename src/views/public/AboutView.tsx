@@ -22,13 +22,13 @@ export const AboutView: React.FC = () => {
       <div className="text-center max-w-3xl mx-auto space-y-4">
         <span className="text-xs font-bold text-orange-600 uppercase tracking-wider bg-orange-100/70 border border-orange-200 px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5">
           <Sparkles className="w-3.5 h-3.5 text-orange-500" />
-          <span>About UGOPAWAVERIFY</span>
+          <span>About BAZERIGHTVERIFY</span>
         </span>
         <h1 className="text-3xl sm:text-5xl font-black text-gray-950 tracking-tight leading-tight">
           Nigeria's Premier Identity & Registry Verification Infrastructure
         </h1>
         <p className="text-base text-gray-600 leading-relaxed">
-          UGOPAWAVERIFY was architected to empower individuals, businesses, fintech startups, and certified verification agents with secure, zero-friction verification against federal registries.
+          BAZERIGHTVERIFY was architected to empower individuals, businesses, fintech startups, and certified verification agents with secure, zero-friction verification against federal registries.
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export const AboutView: React.FC = () => {
                     target.src = 'https://i.ibb.co/BHnHcQBb/98889d82117a416eeb97c76803969bd5.jpg';
                   }
                 }}
-                alt="UGOPAWAVERIFY Identity Operations"
+                alt="BAZERIGHTVERIFY Identity Operations"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
@@ -109,7 +109,7 @@ export const AboutView: React.FC = () => {
             Trusted by Thousands of Verification Agents
           </h2>
           <p className="text-xs sm:text-sm text-gray-600">
-            Every day, agents and businesses across all 36 states count on UGOPAWAVERIFY for accurate results without delays.
+            Every day, agents and businesses across all 36 states count on BAZERIGHTVERIFY for accurate results without delays.
           </p>
         </div>
 
@@ -182,7 +182,7 @@ export const AboutView: React.FC = () => {
           </div>
           <h3 className="text-base font-bold text-gray-900">Regulatory Adherence & NDPR Compliance</h3>
           <p className="text-xs text-gray-600 leading-relaxed">
-            All identity lookups conducted through UGOPAWAVERIFY comply strictly with the Nigeria Data Protection Act (NDPA) and NDPR mandates. Identity records are accessed strictly for authorized KYC, employment screening, and lawful commercial purposes.
+            All identity lookups conducted through BAZERIGHTVERIFY comply strictly with the Nigeria Data Protection Act (NDPA) and NDPR mandates. Identity records are accessed strictly for authorized KYC, employment screening, and lawful commercial purposes.
           </p>
         </div>
 

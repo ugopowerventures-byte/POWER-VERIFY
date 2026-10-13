@@ -16,12 +16,29 @@ const defaultAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmF
 export function cleanSupabaseUrl(raw?: string): string | null {
   if (!raw) return null;
   const trimmed = raw.trim();
+  if (
+    trimmed.includes('your-project-id') ||
+    trimmed.includes('your-project') ||
+    trimmed.includes('placeholder') ||
+    trimmed.includes('example.supabase.co') ||
+    trimmed.includes('undefined') ||
+    trimmed.includes('null')
+  ) {
+    return null;
+  }
   if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
     try {
       const u = new URL(trimmed);
+      if (
+        u.hostname.includes('your-project-id') ||
+        u.hostname.includes('your-project') ||
+        u.hostname.includes('placeholder')
+      ) {
+        return null;
+      }
       return `${u.protocol}//${u.host}`;
     } catch {
-      return trimmed.replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
+      return null;
     }
   }
   return null;
@@ -34,7 +51,14 @@ export function isValidSupabaseKey(key?: string): boolean {
   // A URL or path is NEVER a valid Supabase API key
   if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return false;
   if (trimmed.includes('/') || trimmed.includes('\\') || trimmed.includes(' ')) return false;
-  if (trimmed.includes('your-anon-public-key') || trimmed.includes('your-service-role-key')) return false;
+  if (
+    trimmed.includes('your-anon-public-key') ||
+    trimmed.includes('your-service-role-key') ||
+    trimmed.includes('your-key') ||
+    trimmed.includes('placeholder')
+  ) {
+    return false;
+  }
   return true;
 }
 
@@ -75,7 +99,7 @@ export function extractSupabaseProjectUrl(): string {
     if (trimmed.split('.').length === 3) {
       try {
         const payload = JSON.parse(Buffer.from(trimmed.split('.')[1], 'base64').toString('utf8'));
-        if (payload.ref) {
+        if (payload.ref && !payload.ref.includes('your-project') && !payload.ref.includes('placeholder')) {
           return `https://${payload.ref}.supabase.co`;
         }
       } catch {}
@@ -219,7 +243,7 @@ export function mapUserToSupabaseRow(u: User): Record<string, any> {
     id: u.id,
     email: (u.email || '').toLowerCase().trim(),
     username: u.username || u.email.split('@')[0],
-    full_name: u.fullName || 'UGOPAWAVERIFY User',
+    full_name: u.fullName || 'BAZERIGHTVERIFY User',
     phone: u.phone || '+2348000000000',
     phone2: u.phone2 || null,
     password_hash: u.passwordHash || null,
@@ -1116,9 +1140,16 @@ export async function fetchSupabaseServices(): Promise<Service[] | null> {
         return data.map(mapSupabaseRowToService);
       }
       if (error) {
-        console.warn('[Supabase DB] fetchSupabaseServices error with client:', error.message);
+        if (error.message?.includes('fetch failed')) {
+          // Graceful network unreachable / offline fallback
+          return null;
+        }
+        console.warn('[Supabase DB] fetchSupabaseServices notice with client:', error.message);
       }
     } catch (err: any) {
+      if (err.message?.includes('fetch failed')) {
+        return null;
+      }
       console.warn('[Supabase DB] fetchSupabaseServices exception:', err.message || err);
     }
     return null;
@@ -1150,9 +1181,15 @@ export async function fetchSupabaseServiceByCodeOrId(identifier: string): Promis
         return mapSupabaseRowToService(data);
       }
       if (error) {
-        console.warn('[Supabase DB] fetchSupabaseServiceByCodeOrId error:', error.message);
+        if (error.message?.includes('fetch failed')) {
+          return null;
+        }
+        console.warn('[Supabase DB] fetchSupabaseServiceByCodeOrId notice:', error.message);
       }
     } catch (err: any) {
+      if (err.message?.includes('fetch failed')) {
+        return null;
+      }
       console.warn('[Supabase DB] fetchSupabaseServiceByCodeOrId exception:', err.message || err);
     }
     return null;

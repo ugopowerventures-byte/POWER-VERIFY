@@ -789,7 +789,7 @@ export const BirthAttestationFormView: React.FC = () => {
                 <div className="text-xs text-purple-950 space-y-1">
                   <p className="font-bold">Declaration & Authorization</p>
                   <p className="leading-relaxed text-purple-900">
-                    I solemnly declare that all personal and parental records stated in Sections 1 through 6 are true, complete, and legally correct. I authorize UGOPAWAVERIFY to submit this application to the National Population Commission (NPC) for processing.
+                    I solemnly declare that all personal and parental records stated in Sections 1 through 6 are true, complete, and legally correct. I authorize BAZERIGHTVERIFY to submit this application to the National Population Commission (NPC) for processing.
                   </p>
                 </div>
               </label>

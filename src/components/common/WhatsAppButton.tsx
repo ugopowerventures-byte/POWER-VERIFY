@@ -8,7 +8,7 @@ export const WhatsAppButton: React.FC = () => {
   const cleanNumber = rawNumber.replace(/[^0-9]/g, '');
 
   const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(
-    'Hello UGOPAWAVERIFY Support, I need assistance with my verification portal account.'
+    'Hello BAZERIGHTVERIFY Support, I need assistance with my verification portal account.'
   )}`;
 
   return (

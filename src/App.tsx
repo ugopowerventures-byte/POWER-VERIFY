@@ -96,10 +96,10 @@ const AppRouter: React.FC = () => {
   // Dedicated Mega Admin Access Portal
   const normalizedPath = pathname.replace(/\/+/g, '/').toLowerCase();
   if (
-    normalizedPath === '/mega/admin/ugopawaverify' ||
-    pathname === '/Mega//admin/ugopawaverify' ||
-    pathname === '/mega//admin/ugopawaverify' ||
-    pathname === '/Mega/admin/ugopawaverify'
+    normalizedPath === '/mega/admin/bazerightverify' ||
+    pathname === '/Mega//admin/bazerightverify' ||
+    pathname === '/mega//admin/bazerightverify' ||
+    pathname === '/Mega/admin/bazerightverify'
   ) {
     return <MegaAdminAccessView />;
   }

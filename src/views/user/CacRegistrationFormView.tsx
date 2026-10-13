@@ -526,7 +526,7 @@ export const CacRegistrationFormView: React.FC = () => {
                 required
               />
               <span>
-                I hereby declare that the information provided is correct and true to the best of my knowledge and I authorize Ugopawa Verify to file this incorporation registration with the Corporate Affairs Commission (CAC).
+                I hereby declare that the information provided is correct and true to the best of my knowledge and I authorize Bazeright Verify to file this incorporation registration with the Corporate Affairs Commission (CAC).
               </span>
             </label>
           </div>

@@ -156,9 +156,9 @@ export const ServicesView: React.FC = () => {
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-[#FF6B00] animate-pulse" />
               <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#FF8A00]">
-                UGOPAWAVERIFY Official Catalogue
+                BAZERIGHTVERIFY Official Catalogue
               </span>
-              <span className="text-[10px] text-gray-400 font-mono">UGO PAWA LTD</span>
+              <span className="text-[10px] text-gray-400 font-mono">BAZERIGHT VERIFY SERVICES LTD</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">

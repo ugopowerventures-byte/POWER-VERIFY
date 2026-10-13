@@ -23,15 +23,15 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const DEFAULT_SETTINGS: PublicSettings = {
-  platformName: 'UGOPAWAVERIFY',
-  logoText: 'UGOPAWAVERIFY',
+  platformName: 'BAZERIGHTVERIFY',
+  logoText: 'BAZERIGHTVERIFY',
   tagline: 'Fast, Secure & Reliable Identity Verification Platform',
   supportWhatsapp: '+2348030000000',
-  supportEmail: 'contact@ugopawaverify.com.ng',
+  supportEmail: 'contact@bazerightverify.com.ng',
   whatsappNumber: '07071944789',
   phoneNumber1: '07071944789',
   phoneNumber2: '07018486189',
-  businessEmail: 'contact@ugopawaverify.com.ng',
+  businessEmail: 'contact@bazerightverify.com.ng',
   unitValueNgn: 200,
   currency: 'Credits',
   currencySymbol: 'Credits',
@@ -41,7 +41,7 @@ const DEFAULT_SETTINGS: PublicSettings = {
   bankDetails: {
     bankName: 'Moniepoint Microfinance Bank',
     accountNumber: '8249103821',
-    accountName: 'UGOPAWA VERIFY SERVICES LTD'
+    accountName: 'BAZERIGHT VERIFY SERVICES LTD'
   }
 };
 

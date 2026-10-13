@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import https from 'https';
 
 /**
- * UGOPAWAVERIFY - Official Sendchamp SMS & OTP Integration Client
+ * BAZERIGHTVERIFY - Official Sendchamp SMS & OTP Integration Client
  * Base URL: https://api.sendchamp.com/api/v1 (or configured via SENDCHAMP_BASE_URL)
  *
  * Security Requirements:
@@ -281,7 +281,7 @@ export async function sendSendchampOtp(
 
     const { statusCode: smsStatusCode, data: smsData } = await sendchampRequest('/sms/send', {
       to: [normalizedPhone],
-      message: `Your UGOPAWAVERIFY onboarding verification code is ${fallbackOtp}. Valid for 10 minutes. Do not share.`,
+      message: `Your BAZERIGHTVERIFY onboarding verification code is ${fallbackOtp}. Valid for 10 minutes. Do not share.`,
       sender_name: 'Sendchamp',
       route: 'dnd'
     });

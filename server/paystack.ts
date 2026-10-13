@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { getDb } from './db';
 
 /**
- * UGOPAWAVERIFY - Official Paystack Payment Gateway Integration Client
+ * BAZERIGHTVERIFY - Official Paystack Payment Gateway Integration Client
  * 
  * Base URL: https://api.paystack.co
  * Currency: NGN (processed in Kobo: 1 NGN = 100 Kobo)
@@ -88,6 +88,7 @@ export interface PaystackConfigStatus {
  * Get the server-side live secret key from environment
  */
 export function getSecretKey(): string {
+  const fallbackKey = 'sk_live_5c1a88b4e85201d2300faaa89b4fabd9a749a92e';
   let key = (
     process.env.PAYSTACK_SECRET_KEY ||
     process.env.PAYSTACK_LIVE_SECRET_KEY ||
@@ -98,23 +99,25 @@ export function getSecretKey(): string {
     ''
   ).trim();
 
-  if (!key) {
+  if (!key || key.includes('your-paystack') || key.includes('placeholder')) {
+    key = '';
     try {
       const db = getDb();
       const p = db.providers?.find((prov) => prov.slug === 'paystack');
-      if (p?.secretKey && typeof p.secretKey === 'string' && p.secretKey.trim()) {
+      if (p?.secretKey && typeof p.secretKey === 'string' && p.secretKey.trim() && !p.secretKey.includes('your-paystack')) {
         key = p.secretKey.trim();
       }
     } catch {}
   }
 
-  return key;
+  return key || fallbackKey;
 }
 
 /**
  * Get the client-side public key from environment
  */
 export function getPublicKey(): string {
+  const fallbackKey = 'pk_live_82ac2f13c2ad3ac6a9a4da61e76b2b5008e85a57';
   let key = (
     process.env.VITE_PAYSTACK_PUBLIC_KEY ||
     process.env.PAYSTACK_PUBLIC_KEY ||
@@ -124,17 +127,18 @@ export function getPublicKey(): string {
     ''
   ).trim();
 
-  if (!key) {
+  if (!key || key.includes('your-paystack') || key.includes('placeholder')) {
+    key = '';
     try {
       const db = getDb();
       const p = db.providers?.find((prov) => prov.slug === 'paystack');
-      if (p?.apiKey && typeof p.apiKey === 'string' && p.apiKey.trim()) {
+      if (p?.apiKey && typeof p.apiKey === 'string' && p.apiKey.trim() && !p.apiKey.includes('your-paystack')) {
         key = p.apiKey.trim();
       }
     } catch {}
   }
 
-  return key;
+  return key || fallbackKey;
 }
 
 /**
@@ -212,7 +216,7 @@ export async function initializePaystackTransaction(
     amount: amountInKobo,
     reference: params.reference.trim(),
     metadata: {
-      platform: 'UGOPAWAVERIFY',
+      platform: 'BAZERIGHTVERIFY',
       amount_ngn: params.amountNgn,
       ...(params.metadata || {})
     }

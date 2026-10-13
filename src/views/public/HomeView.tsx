@@ -216,7 +216,7 @@ export const HomeView: React.FC = () => {
         </div>
       </section>
 
-      {/* WHY CHOOSE UGOPAWAVERIFY (FINTECH EXCELLENCE) */}
+      {/* WHY CHOOSE BAZERIGHTVERIFY (FINTECH EXCELLENCE) */}
       <section className="bg-[#121212] text-white py-24 border-t border-[#252525]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto space-y-3 mb-16">
@@ -299,7 +299,7 @@ export const HomeView: React.FC = () => {
             Ready to Verify Identity Records Instantly?
           </h2>
           <p className="text-sm text-gray-300 max-w-xl mx-auto leading-relaxed">
-            Join thousands of registered businesses and verification agents across Nigeria utilizing UGOPAWAVERIFY for rapid, dependable KYC.
+            Join thousands of registered businesses and verification agents across Nigeria utilizing BAZERIGHTVERIFY for rapid, dependable KYC.
           </p>
           <div className="pt-2">
             <button
