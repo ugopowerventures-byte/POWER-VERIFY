@@ -1,33 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../lib/apiClient';
 import { Service } from '../../types';
 import { formatCurrency } from '../../utils/currency';
-import { Search, UserCheck, CreditCard, PhoneCall, ShieldCheck, FileCheck, ArrowRight } from 'lucide-react';
+import {
+  Search,
+  UserCheck,
+  CreditCard,
+  PhoneCall,
+  ShieldCheck,
+  FileCheck,
+  ArrowRight,
+  Sparkles,
+  CheckCircle2,
+  Lock,
+  Building,
+  Baby,
+  FileEdit,
+  SlidersHorizontal,
+  X,
+  BadgeCheck,
+  Layers,
+  ArrowUpRight
+} from 'lucide-react';
 
 export const ServicesView: React.FC = () => {
   const { user, navigate } = useAuth();
   const [services, setServices] = useState<Service[]>([]);
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('ALL');
+  const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
     api.get('/services')
-      .then((data) => setServices(data || []))
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .then((data: Service[]) => {
+        if (isMounted) setServices(data || []);
+      })
+      .catch((err) => {
+        console.error('Failed to load services:', err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const filteredServices = services.filter((s) => {
-    const matchesSearch =
-      s.name.toLowerCase().includes(search.toLowerCase()) ||
-      s.description.toLowerCase().includes(search.toLowerCase()) ||
-      s.code.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = category === 'ALL' || s.category === category;
-    return matchesSearch && matchesCategory;
-  });
-
+  // Map service codes to dedicated forms
   const getServiceRoute = (code: string) => {
     const upper = code.toUpperCase();
     switch (upper) {
@@ -76,7 +97,7 @@ export const ServicesView: React.FC = () => {
       case 'ONLINE_NIN':
         return '/verify/online-nin-registration';
       default:
-        return `/verify?service=${code}`;
+        return `/verify?service=${encodeURIComponent(code)}`;
     }
   };
 
@@ -89,134 +110,288 @@ export const ServicesView: React.FC = () => {
     }
   };
 
-  const categories = ['ALL', ...Array.from(new Set(services.map((s) => s.category).filter(Boolean)))];
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    services.forEach((s) => {
+      if (s.category) set.add(s.category.trim());
+    });
+    return ['ALL', ...Array.from(set).sort()];
+  }, [services]);
+
+  const filteredServices = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return services.filter((s) => {
+      const matchesSearch =
+        !query ||
+        s.name.toLowerCase().includes(query) ||
+        s.code.toLowerCase().includes(query) ||
+        (s.description && s.description.toLowerCase().includes(query)) ||
+        (s.category && s.category.toLowerCase().includes(query));
+      const matchesCategory =
+        selectedCategory === 'ALL' ||
+        (s.category && s.category.trim().toLowerCase() === selectedCategory.toLowerCase());
+      return matchesSearch && matchesCategory;
+    });
+  }, [services, search, selectedCategory]);
+
+  const getServiceIcon = (category: string, code: string) => {
+    const c = category.toLowerCase();
+    const cd = code.toLowerCase();
+    if (cd.includes('bvn') || c.includes('bank')) return CreditCard;
+    if (cd.includes('phone') || cd.includes('telecom')) return PhoneCall;
+    if (cd.includes('birth') || cd.includes('civil')) return Baby;
+    if (cd.includes('cac') || cd.includes('tin') || c.includes('corporate')) return Building;
+    if (cd.includes('mod') || cd.includes('delink') || cd.includes('clear')) return FileEdit;
+    return ShieldCheck;
+  };
 
   return (
-    <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Header */}
-      <div className="text-center max-w-2xl mx-auto mb-12">
-        <span className="text-xs font-bold text-orange-600 uppercase tracking-wider bg-orange-100/60 px-3 py-1 rounded-full">
-          Registry Directory
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-3 tracking-tight">
-          Available Verification Services
-        </h1>
-        <p className="text-sm text-gray-600 mt-2">
-          Real-time, automated verification across certified national identity databases with instant slips.
-        </p>
-      </div>
+    <div className="min-h-screen bg-[#0D0D0E] text-white">
+      {/* Premium Hero Header Section */}
+      <section className="relative overflow-hidden border-b border-white/10 bg-gradient-to-b from-[#141416] via-[#0E0E10] to-[#0D0D0E] pt-10 pb-12 sm:pt-16 sm:pb-20">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-72 bg-gradient-to-r from-[#FF6B00]/15 via-red-600/10 to-amber-500/10 blur-3xl pointer-events-none" />
 
-      {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-between items-center mb-8">
-        <div className="relative w-full sm:w-80">
-          <input
-            type="text"
-            placeholder="Search service by name or code..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-300 bg-white text-sm focus:outline-none focus:border-orange-500"
-          />
-          <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-3" />
-        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-[#FF6B00] animate-pulse" />
+              <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#FF8A00]">
+                UGOPAWAVERIFY Official Catalogue
+              </span>
+              <span className="text-[10px] text-gray-400 font-mono">UGO PAWA LTD</span>
+            </div>
 
-        <div className="flex flex-wrap gap-2 w-full sm:w-auto">
-          {categories.map((c) => (
-            <button
-              key={c}
-              onClick={() => setCategory(c)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-colors ${
-                category === c
-                  ? 'bg-[#121212] text-white'
-                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
-              }`}
-            >
-              {c.replace('_', ' ')}
-            </button>
-          ))}
-        </div>
-      </div>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
+              Instant Verification & <br className="hidden sm:inline" />
+              <span className="bg-gradient-to-r from-white via-gray-100 to-[#FF8A00] bg-clip-text text-transparent">
+                Civil Registry Services
+              </span>
+            </h1>
 
-      {/* Services Grid */}
-      {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="h-52 bg-white rounded-3xl border border-gray-200 animate-pulse" />
-          ))}
+            <p className="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed">
+              Automated, certified lookup portal for National Identity (NIMC), Banking Verification (BVN), Corporate Affairs (CAC), Tax Registry (JTB), and Civil Records with instant digital certificates.
+            </p>
+
+            {/* Quick Stat Pill Bar */}
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs font-mono text-gray-300">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/[0.04] border border-white/5">
+                <BadgeCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>{services.length} Total Services</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/[0.04] border border-white/5">
+                <Lock className="w-3.5 h-3.5 text-[#FF8A00]" />
+                <span>256-Bit Idempotent Security</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/[0.04] border border-white/5">
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <span>Instant Slip Download</span>
+              </span>
+            </div>
+          </div>
         </div>
-      ) : filteredServices.length === 0 ? (
-        <div className="bg-white rounded-3xl p-12 text-center border border-gray-200 max-w-md mx-auto">
-          <p className="text-gray-500 text-sm">No services found matching your criteria.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredServices.map((service) => (
-            <div
-              key={service.id}
-              onClick={() => handleSelectService(service)}
-              className="bg-white rounded-3xl p-6 border border-gray-200 hover:border-orange-500/50 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between cursor-pointer group"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[11px] font-mono font-bold text-orange-600 bg-orange-50 px-2.5 py-0.5 rounded-md border border-orange-200">
-                    {service.code}
-                  </span>
-                  <span
-                    className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
-                      service.status === 'ACTIVE'
-                        ? 'bg-emerald-50 text-emerald-700'
-                        : 'bg-amber-50 text-amber-700'
+      </section>
+
+      {/* Main Catalog Viewport */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
+        {/* Controls Bar: Search & Category Pills */}
+        <div className="bg-[#151518] p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-white/10 shadow-2xl space-y-4">
+          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+            {/* Search Input */}
+            <div className="relative flex-1 max-w-lg">
+              <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by service name, code, or description (e.g., NIN, BVN, CAC)..."
+                className="w-full pl-11 pr-10 py-3 rounded-xl bg-[#0E0E10] border border-white/10 text-white placeholder-gray-500 text-xs sm:text-sm focus:outline-none focus:border-[#FF6B00] focus:ring-1 focus:ring-[#FF6B00] transition-all"
+              />
+              {search && (
+                <button
+                  onClick={() => setSearch('')}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-white"
+                  title="Clear search"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Counter Badge */}
+            <div className="flex items-center justify-between md:justify-end gap-3 text-xs text-gray-400">
+              <span className="font-mono">
+                Showing <strong className="text-white font-bold">{filteredServices.length}</strong> of {services.length} services
+              </span>
+            </div>
+          </div>
+
+          {/* Category Filter Pills */}
+          <div className="pt-2 border-t border-white/5">
+            <div className="flex items-center gap-2 mb-2">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-[#FF8A00]" />
+              <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400">Filter by Category:</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => {
+                const isSelected = selectedCategory.toLowerCase() === cat.toLowerCase();
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      isSelected
+                        ? 'bg-gradient-to-r from-[#FF6B00] to-[#FF8A00] text-black shadow-md shadow-orange-500/20 scale-[1.02]'
+                        : 'bg-white/[0.04] text-gray-300 border border-white/10 hover:bg-white/[0.08] hover:text-white'
                     }`}
                   >
-                    {service.status}
-                  </span>
+                    {cat === 'ALL' ? 'All Services' : cat.replace('_', ' ')}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Services Grid Display */}
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[1, 2, 3, 4, 5, 6].map((idx) => (
+              <div
+                key={idx}
+                className="h-64 rounded-3xl bg-[#141417] border border-white/5 animate-pulse p-6 flex flex-col justify-between"
+              >
+                <div className="space-y-3">
+                  <div className="h-5 w-24 bg-white/5 rounded-md" />
+                  <div className="h-6 w-3/4 bg-white/10 rounded-md" />
+                  <div className="h-4 w-full bg-white/5 rounded-md" />
+                  <div className="h-4 w-2/3 bg-white/5 rounded-md" />
                 </div>
+                <div className="h-10 w-full bg-white/10 rounded-xl" />
+              </div>
+            ))}
+          </div>
+        ) : filteredServices.length === 0 ? (
+          <div className="bg-[#141417] rounded-3xl p-12 text-center border border-white/10 max-w-lg mx-auto space-y-4">
+            <div className="w-14 h-14 rounded-2xl bg-white/5 text-gray-400 flex items-center justify-center mx-auto">
+              <Search className="w-6 h-6" />
+            </div>
+            <h3 className="text-lg font-bold text-white">No matching services found</h3>
+            <p className="text-xs text-gray-400 max-w-sm mx-auto">
+              We couldn't find any verification services matching "{search}". Try searching for NIN, BVN, Phone, CAC, or reset filters.
+            </p>
+            <button
+              onClick={() => {
+                setSearch('');
+                setSelectedCategory('ALL');
+              }}
+              className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs transition-colors"
+            >
+              Reset Filters
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {filteredServices.map((service) => {
+              const ServiceIcon = getServiceIcon(service.category || '', service.code);
+              const isAvailable = service.status === 'ACTIVE';
 
-                <h3 className="text-base font-bold text-gray-900 group-hover:text-orange-600 transition-colors">
-                  {service.name}
-                </h3>
-                <p className="text-xs text-gray-500 mt-2 leading-relaxed">
-                  {service.description}
-                </p>
+              return (
+                <div
+                  key={service.id || service.code}
+                  onClick={() => handleSelectService(service)}
+                  className="group relative bg-[#151518] hover:bg-[#1A1A1E] rounded-3xl p-6 sm:p-7 border border-white/10 hover:border-[#FF6B00]/60 shadow-lg hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-200 flex flex-col justify-between cursor-pointer"
+                >
+                  {/* Card Top: Code Badge & Status */}
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#FF6B00]/20 to-red-600/10 border border-[#FF6B00]/30 text-[#FF8A00] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                          <ServiceIcon className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-mono font-bold tracking-wider text-[#FF8A00] bg-[#FF6B00]/10 px-2.5 py-0.5 rounded-md border border-[#FF6B00]/20 block w-fit">
+                            {service.code}
+                          </span>
+                          <span className="text-[10px] text-gray-400 mt-0.5 block">
+                            {service.category || 'General'}
+                          </span>
+                        </div>
+                      </div>
 
-                <div className="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-600 space-y-1">
-                  <span className="font-semibold text-gray-700 block">Required Details:</span>
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {service.requiredFields.map((f) => (
                       <span
-                        key={f.name}
-                        className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-[10px]"
+                        className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${
+                          isAvailable
+                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                            : 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                        }`}
                       >
-                        {f.label}
+                        {service.status}
                       </span>
-                    ))}
+                    </div>
+
+                    {/* Title & Description */}
+                    <h3 className="text-base sm:text-lg font-extrabold text-white group-hover:text-[#FF8A00] transition-colors leading-snug">
+                      {service.name}
+                    </h3>
+                    <p className="text-xs text-gray-400 mt-2 line-clamp-2 leading-relaxed">
+                      {service.description || 'Certified national identity & document verification service.'}
+                    </p>
+
+                    {/* Required Fields Pill Section */}
+                    {service.requiredFields && service.requiredFields.length > 0 && (
+                      <div className="mt-4 pt-3 border-t border-white/5">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block mb-1.5">
+                          Required Input:
+                        </span>
+                        <div className="flex flex-wrap gap-1">
+                          {service.requiredFields.slice(0, 3).map((f) => (
+                            <span
+                              key={f.name}
+                              className="text-[10px] bg-white/[0.04] text-gray-300 border border-white/10 px-2 py-0.5 rounded-md"
+                            >
+                              {f.label}
+                            </span>
+                          ))}
+                          {service.requiredFields.length > 3 && (
+                            <span className="text-[10px] bg-white/[0.04] text-gray-400 border border-white/10 px-1.5 py-0.5 rounded-md font-mono">
+                              +{service.requiredFields.length - 3} more
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Card Bottom: Price & Open Action */}
+                  <div className="pt-5 mt-5 border-t border-white/10 flex items-center justify-between gap-3">
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-gray-400 block tracking-wider">
+                        Official Fee
+                      </span>
+                      <span className="text-xl font-black text-white font-mono tracking-tight group-hover:text-white transition-colors">
+                        {formatCurrency(service.price)}
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSelectService(service);
+                      }}
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#FF8A00] text-black font-extrabold text-xs hover:brightness-110 shadow-md shadow-orange-500/20 group-hover:scale-105 transition-all cursor-pointer"
+                    >
+                      <span>Proceed</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
                   </div>
                 </div>
-              </div>
-
-              <div className="pt-6 mt-6 border-t border-gray-100 flex items-center justify-between">
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">Price</span>
-                  <span className="text-xl font-black text-gray-950 font-mono">
-                    {formatCurrency(service.price)}
-                  </span>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleSelectService(service);
-                  }}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#121212] text-white hover:bg-orange-500 hover:text-black font-bold text-xs transition-all"
-                >
-                  <span>Select Service</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+              );
+            })}
+          </div>
+        )}
+      </main>
     </div>
   );
 };
+

@@ -13,6 +13,7 @@ import {
   AlertCircle,
   CheckCircle2,
   ArrowRight,
+  ArrowLeft,
   Wallet,
   KeyRound,
   RotateCcw,
@@ -343,13 +344,32 @@ export const VerifyServiceView: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
+      {/* Back button & Breadcrumb */}
+      <div className="flex items-center justify-between gap-3">
+        <button
+          onClick={() => navigate('/services')}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold text-gray-600 hover:text-black bg-white hover:bg-gray-100 border border-gray-200 transition-all cursor-pointer shadow-sm"
+        >
+          <ArrowLeft className="w-3.5 h-3.5 text-[#FF6B00]" />
+          <span>Back to All Services</span>
+        </button>
+
+        {selectedService && (
+          <span className="text-[11px] font-mono font-bold text-[#FF6B00] bg-orange-50 px-2.5 py-1 rounded-lg border border-orange-200">
+            {selectedService.code}
+          </span>
+        )}
+      </div>
+
       {/* Page Title */}
       <div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-950 tracking-tight">
-          Verify Identity Record
+          {selectedService ? selectedService.name : 'Verify Identity Record'}
         </h1>
         <p className="text-xs sm:text-sm text-gray-500 mt-1">
-          Perform live identity lookups with official registry verification and instant digital certificate.
+          {selectedService
+            ? selectedService.description
+            : 'Perform live identity lookups with official registry verification and instant digital certificate.'}
         </p>
       </div>
 
