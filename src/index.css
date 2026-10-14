@@ -1,5 +1,75 @@
 @import "tailwindcss";
 
+@theme {
+  --color-royal-blue: #142B8C;
+  --color-royal-blue-hover: #0F216E;
+  --color-royal-blue-light: #1E3CA8;
+  --color-sky-blue: #38BDF8;
+  --color-sky-blue-hover: #0EA5E9;
+  --color-sky-blue-light: #E0F2FE;
+  --color-brand-red: #E53935;
+  --color-brand-red-hover: #D32F2F;
+  --color-brand-red-light: #FFEBEE;
+  --color-brand-bg: #F0F8FF;
+  --color-brand-dark: #172033;
+  --color-brand-border: #DCE5F2;
+}
+
+:root {
+  --royal-blue: #142B8C;
+  --royal-blue-hover: #0F216E;
+  --royal-blue-light: #1E3CA8;
+  --sky-blue: #38BDF8;
+  --sky-blue-hover: #0EA5E9;
+  --sky-blue-light: #E0F2FE;
+  --brand-white: #FFFFFF;
+  --brand-red: #E53935;
+  --brand-red-hover: #D32F2F;
+  --brand-red-light: #FFEBEE;
+  --brand-bg: #F0F8FF;
+  --brand-dark: #172033;
+  --brand-border: #DCE5F2;
+}
+
+/* Standard Button Utility Classes */
+.btn-primary {
+  background-color: #142B8C;
+  color: #FFFFFF;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-primary:hover {
+  background-color: #0F216E;
+  box-shadow: 0 4px 14px rgba(20, 43, 140, 0.25);
+}
+
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: #142B8C;
+  border: 1.5px solid #142B8C;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-secondary:hover {
+  background-color: #F0F8FF;
+  color: #0F216E;
+  border-color: #0F216E;
+}
+
+.btn-danger {
+  background-color: #E53935;
+  color: #FFFFFF;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-danger:hover {
+  background-color: #D32F2F;
+  box-shadow: 0 4px 14px rgba(229, 57, 53, 0.25);
+}
+
 /* 
  * BAZERIGHTVERIFY - Typography & Cross-Platform Naira (₦) Rendering Rules
  * Ensures the official Nigerian Naira Unicode symbol (₦ - U+20A6) displays crisply

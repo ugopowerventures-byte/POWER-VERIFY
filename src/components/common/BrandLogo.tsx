@@ -51,11 +51,11 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
       />
       {showText && (
         <div className="flex flex-col select-none pointer-events-none">
-          <span className={`font-black tracking-tight leading-none text-gray-950 text-lg ${textClassName}`}>
-            BAZERIGHT<span className="text-[#FF6B00]">VERIFY</span>
+          <span className={`font-black tracking-tight leading-none text-[#142B8C] text-lg ${textClassName}`}>
+            BAZERIGHT<span className="text-[#38BDF8]">VERIFY</span>
           </span>
           {subtitle ? (
-            <span className="text-[10px] font-bold tracking-wider uppercase text-amber-700 mt-0.5">
+            <span className="text-[10px] font-bold tracking-wider uppercase text-[#142B8C]/80 mt-0.5">
               {subtitle}
             </span>
           ) : null}

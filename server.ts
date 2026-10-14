@@ -1,8 +1,8 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+dotenv.config({ override: true });
 import express from "express";
 import path from "path";
 import fs from "fs";
-import { createServer as createViteServer } from "vite";
 import { apiRouter } from "./server/api";
 import { initDb } from "./server/db";
 
@@ -61,19 +61,24 @@ async function startServer() {
     next(err);
   });
 
-  // Vite middleware for development
-  if (process.env.NODE_ENV !== "production") {
+  // Frontend Serving: Static dist files in production, Vite middleware in development
+  const distPath = path.join(process.cwd(), "dist");
+  const isProduction =
+    process.env.NODE_ENV === "production" ||
+    (process.env.NODE_ENV !== "development" && fs.existsSync(path.join(distPath, "index.html")));
+
+  if (isProduction) {
+    app.use(express.static(distPath));
+    app.get("*", (req, res) => {
+      res.sendFile(path.join(distPath, "index.html"));
+    });
+  } else {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
     });
     app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
-    });
   }
 
   const server = app.listen(PORT, "0.0.0.0", () => {

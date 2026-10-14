@@ -11,7 +11,7 @@ export const Header: React.FC = () => {
   const navLinks: { label: string; path: string }[] = [];
 
   return (
-    <header className="sticky top-0 z-50 bg-[#121212]/95 backdrop-blur-md border-b border-[#2A2A2A] text-white">
+    <header className="sticky top-0 z-50 bg-[#142B8C] backdrop-blur-md border-b border-[#1E3CA8] text-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo - Static display, not a button, remains steady without directing */}
         <div
@@ -32,8 +32,8 @@ export const Header: React.FC = () => {
                 onClick={() => navigate(link.path)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isActive
-                    ? 'text-[#FFB800] bg-white/5'
-                    : 'text-gray-300 hover:text-white hover:bg-white/5'
+                    ? 'text-[#38BDF8] bg-white/10'
+                    : 'text-white/80 hover:text-white hover:bg-white/10'
                 }`}
               >
                 {link.label}
@@ -48,7 +48,7 @@ export const Header: React.FC = () => {
             <button
               id="header-dashboard-btn"
               onClick={() => navigate(user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' || user?.role === 'MEGA_ADMIN' ? '/admin' : '/dashboard')}
-              className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#FF8A00] text-black font-semibold text-sm hover:brightness-110 shadow-lg shadow-orange-500/25 transition-all"
+              className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-[#38BDF8] text-[#142B8C] font-bold text-sm hover:bg-white hover:text-[#142B8C] shadow-md transition-all cursor-pointer"
             >
               <UserAvatar user={user} size="xs" showBorder />
               <span>{user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' || user?.role === 'MEGA_ADMIN' ? 'Admin Portal' : 'My Portal'}</span>
@@ -59,14 +59,14 @@ export const Header: React.FC = () => {
               <button
                 id="header-login-btn"
                 onClick={() => navigate('/login')}
-                className="px-5 py-2.5 rounded-xl text-sm font-semibold text-gray-200 hover:text-white hover:bg-white/10 transition-colors"
+                className="px-5 py-2.5 rounded-xl text-sm font-bold text-white hover:bg-white/10 transition-colors cursor-pointer"
               >
                 LOGIN
               </button>
               <button
                 id="header-register-btn"
                 onClick={() => navigate('/register')}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#FF8A00] text-black font-bold text-sm hover:brightness-110 shadow-lg shadow-orange-500/25 transition-all"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#38BDF8] text-[#142B8C] font-extrabold text-sm hover:bg-white hover:text-[#142B8C] shadow-md transition-all cursor-pointer"
               >
                 <span>CREATE ACCOUNT</span>
                 <ArrowRight className="w-4 h-4" />
@@ -79,7 +79,7 @@ export const Header: React.FC = () => {
         <button
           id="header-mobile-toggle"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2.5 rounded-xl bg-white/5 text-gray-300 hover:text-white border border-white/10"
+          className="md:hidden p-2.5 rounded-xl bg-white/10 text-white hover:bg-white/20 border border-white/20 cursor-pointer"
           aria-label="Toggle Navigation"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -88,7 +88,7 @@ export const Header: React.FC = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#161616] border-b border-[#2A2A2A] px-4 pt-3 pb-6 space-y-2">
+        <div className="md:hidden bg-[#0F216E] border-b border-[#1E3CA8] px-4 pt-3 pb-6 space-y-2">
           {navLinks.map((link) => (
             <button
               key={link.path}
@@ -96,7 +96,7 @@ export const Header: React.FC = () => {
                 navigate(link.path);
                 setMobileMenuOpen(false);
               }}
-              className="block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-200 hover:text-white hover:bg-white/5"
+              className="block w-full text-left px-4 py-3 rounded-xl text-base font-medium text-white/90 hover:text-white hover:bg-white/10"
             >
               {link.label}
             </button>
@@ -108,7 +108,7 @@ export const Header: React.FC = () => {
                   navigate(user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' || user?.role === 'MEGA_ADMIN' ? '/admin' : '/dashboard');
                   setMobileMenuOpen(false);
                 }}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#FF8A00] text-black font-bold text-center"
+                className="w-full py-3 rounded-xl bg-[#38BDF8] text-[#142B8C] font-extrabold text-center hover:bg-white"
               >
                 Go to {user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' || user?.role === 'MEGA_ADMIN' ? 'Admin Panel' : 'User Dashboard'}
               </button>
@@ -119,7 +119,7 @@ export const Header: React.FC = () => {
                     navigate('/login');
                     setMobileMenuOpen(false);
                   }}
-                  className="w-full py-3 rounded-xl bg-white/5 text-white font-semibold text-center"
+                  className="w-full py-3 rounded-xl bg-white/10 text-white font-bold text-center hover:bg-white/20"
                 >
                   LOGIN
                 </button>
@@ -128,7 +128,7 @@ export const Header: React.FC = () => {
                     navigate('/register');
                     setMobileMenuOpen(false);
                   }}
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF6B00] to-[#FF8A00] text-black font-bold text-center"
+                  className="w-full py-3 rounded-xl bg-[#38BDF8] text-[#142B8C] font-extrabold text-center hover:bg-white"
                 >
                   CREATE ACCOUNT
                 </button>
